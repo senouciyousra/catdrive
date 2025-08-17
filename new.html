@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Academy - Playful Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        * {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="8" y="24" font-size="20" font-family="Arial, sans-serif">🐾</text></svg>') 16 16, auto !important;
+        }
+        a, button, .nav-icon, .path-card, .subject-card, .file-item, .team-link, .source-link,
+        .action-btn, .source-btn, .search-button, .back-btn, input, [onclick] {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><text x="8" y="28" font-size="24" font-family="Arial, sans-serif">🐾</text></svg>') 18 18, pointer !important;
+        }
+        /* Force cursor on all interactive elements */
+        *:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><text x="8" y="28" font-size="24" font-family="Arial, sans-serif">🐾</text></svg>') 18 18, auto !important;
+        }
+        /* Click animation for cursor size changes */
+        .cursor-big {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44"><text x="10" y="32" font-size="28" font-family="Arial, sans-serif">🐾</text></svg>') 22 22, pointer !important;
+        }
+        .cursor-small {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><text x="6" y="22" font-size="18" font-family="Arial, sans-serif">🐾</text></svg>') 14 14, pointer !important;
+        }
+        /* Apply cursor changes to all elements */
+        .cursor-big * {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44"><text x="10" y="32" font-size="28" font-family="Arial, sans-serif">🐾</text></svg>') 22 22, pointer !important;
+        }
+        .cursor-small * {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><text x="6" y="22" font-size="18" font-family="Arial, sans-serif">🐾</text></svg>') 14 14, pointer !important;
+        }
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255, 192, 203, 0.4);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+        .particle::before {
+            content: '🐾';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #5d4e60;
+            overflow-x: hidden;
+            cursor: url('cursor.jpg'), auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #ff6b81;
+            text-shadow: 3px 3px 0 #ff9ff3;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .cat-icon {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7d5fff;
+            font-weight: 500;
+        }
+        
+        .main-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: url('cursor.jpg'), auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,129,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .section-card:hover::before {
+            transform: scale(1);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .section-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff9ff3;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #ff6b81;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .section-desc {
+            font-size: 1rem;
+            color: #7d5fff;
+        }
+        
+        .subjects-container {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .subject-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: url('cursor.jpg'), auto;
+            position: relative;
+        }
+        
+        .subject-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .subject-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .subject-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 3px solid #ff9ff3;
+        }
+        
+        .subject-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .subject-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ff6b81;
+        }
+        
+        .subcategories {
+            display: none;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #ff9ff3;
+        }
+        
+        .subcategory {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .subcategory:hover {
+            background: #ffecf2;
+            transform: translateX(5px);
+        }
+        
+        .subcategory-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .subcategory-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .subcategory-name {
+            font-weight: 500;
+            color: #5d4e60;
+        }
+        
+        .back-btn {
+            display: none;
+            background: #ff6b81;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: url('cursor.jpg'), auto;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,107,129,0.3);
+        }
+        
+        .back-btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,107,129,0.4);
+        }
+        
+        .paw-prints {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: paw-walk 10s linear infinite;
+        }
+        /* Floating Elements */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .decorative-paws {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+            display: flex;
+            gap: 10px;
+        }
+        .paw {
+            font-size: 1.5rem;
+            opacity: 0.6;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        .paw:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .paw:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes paw-walk {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-30px) rotate(-10deg); }
+            50% { transform: translateX(0) rotate(0deg); }
+            75% { transform: translateX(30px) rotate(10deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+        
+        /* Content Screens */
+        .content-screen {
+            display: none;
+            padding: 20px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .content-screen h2 {
+            color: #ff6b81;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 0 #ff9ff3;
+        }
+        
+        .subjects-grid, .teams-grid, .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .action-buttons, .source-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-btn, .source-btn {
+            background: #ff9ff3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover, .source-btn:hover {
+            background: #ff6b81;
+            transform: translateY(-3px);
+        }
+        
+        .team-link {
+            display: block;
+            background: #f8f9fa;
+            color: #5d4e60;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .team-link:hover {
+            background: #ffecf2;
+            transform: translateX(5px);
+        }
+        
+        /* File Modal */
+        .file-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .modal-header {
+            background: #ff6b81;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            height: 70vh;
+            padding: 0;
+        }
+        
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            background: #ff6b81;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-btn:hover {
+            background: #ff5252;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .main-sections { grid-template-columns: 1fr; }
+            .subjects-container { grid-template-columns: 1fr; }
+            .subjects-grid, .teams-grid, .sources-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Elements -->
+    <div class="floating-particles" id="particles"></div>
+    <div class="decorative-paws">
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+        <span class="paw">🐾</span>
+    </div>
+    <nav class="nav-icons">
+        <a href="https://telegram.org" class="nav-icon" title="Join our Telegram">
+            <i class="fab fa-telegram"></i>
+        </a>
+        <a href="https://drive.google.com" class="nav-icon" title="Access Drive">
+            <i class="fab fa-google-drive"></i>
+        </a>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>
+                <img  src="pictures/cat5.jpg" alt="Cat Icon" class="cat-icon">
+               SECOND YEAR
+                <img src="pictures/cat5.jpg" alt="Cat Icon" class="cat-icon">
+            </h1>
+            <p class="subtitle">Purrfect place for playful learning!</p>
+        </header>
+        
+        <main>
+            <div class="main-sections" id="mainSections">
+                <div class="section-card" data-section="semester3">
+                    <div class="section-icon">
+                        <img src="pictures/5841689567839766742_120.jpg" alt="Semester 3 Cat">
+                    </div>
+                    <h2 class="section-title">
+                        <img src="pictures/cat3.jpg" alt="Cat Icon" class="cat-icon" style="width: 30px; height: 30px;">
+                        Semester 3
+                    </h2>
+                    <p class="section-desc">Explore your third semester subjects</p>
+                </div>
+                
+                <div class="section-card" data-section="semester4">
+                    <div class="section-icon">
+                        <img src="pictures/cat5.jpg" alt="Semester 4 Cat">
+                    </div>
+                    <h2 class="section-title">
+                        <img src="pictures/99.jpg" alt="Cat Icon" class="cat-icon" style="width: 30px; height: 30px;">
+                        Semester 4
+                    </h2>
+                    <p class="section-desc">Dive into fourth semester adventures</p>
+                </div>
+                
+                <div class="section-card" data-section="resources">
+                    <div class="section-icon">
+                        <img src="pictures/cat7.jpg" alt="Learning Resources Cat">
+                    </div>
+                    <h2 class="section-title">
+                        <img src="pictures/5841689567839766750_120.jpg" alt="Cat Icon" class="cat-icon" style="width: 30px; height: 30px;">
+                        Learning Resources
+                    </h2>
+                    <p class="section-desc">Helpful materials and guides</p>
+                </div>
+                
+                <div class="section-card" data-section="team">
+                    <div class="section-icon">
+                        <img src="pictures/5841689567839766750_120.jpg" alt="Study Team Cat">
+                    </div>
+                    <h2 class="section-title">
+                        <img src="pictures/cat4.jpg" alt="Cat Icon" class="cat-icon" style="width: 30px; height: 30px;">
+                        Study Team
+                    </h2>
+                    <p class="section-desc">Connect with your study buddies</p>
+                </div>
+            </div>
+            
+            <button class="back-btn" id="backBtn">
+                <img src="pictures/5841689567839766745_120.jpg" alt="Cat Icon" class="cat-icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                Back to Main Menu
+            </button>
+            
+            <!-- Semester 3 Content -->
+            <div id="semester3" class="content-screen">
+                <button class="back-btn" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+                <h2>Semester 3 Subjects</h2>
+                <div class="subjects-grid">
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766742_120.jpg" alt="Algebra">
+                            </div>
+                            <div class="subject-title">Algebra</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TD')">TD</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat4.jpg" alt="Probability & Statistics II">
+                            </div>
+                            <div class="subject-title">Probability & Statistics II</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TD')">TD</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catcat.jpg" alt="Entrepreneurship">
+                            </div>
+                            <div class="subject-title">Entrepreneurship</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catcat.jpg" alt="Algorithms & Complexity">
+                            </div>
+                            <div class="subject-title">Algorithms & Complexity</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TD&TP')">TD&TP</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catt.jpg" alt="Object-Oriented Programming I">
+                            </div>
+                            <div class="subject-title">Object-Oriented Programming I</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TP')">TP</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/pic.jpg" alt="Analysis III">
+                            </div>
+                            <div class="subject-title">Analysis III</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TD')">TD</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/99.jpg" alt="Architecture II">
+                            </div>
+                            <div class="subject-title">Architecture II</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                            <button class="action-btn" onclick="showFiles(this, 'TD')">TD</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766742_120.jpg" alt="File Structure">
+                            </div>
+                            <div class="subject-title">File Structure</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Semester 4 Content -->
+            <div id="semester4" class="content-screen">
+                <button class="back-btn" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+                <h2>Semester 4 Subjects</h2>
+                <div class="subjects-grid">
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catt.jpg" alt="Object-Oriented Programming II">
+                            </div>
+                            <div class="subject-title">Object-Oriented Programming II</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat7.jpg" alt="THL">
+                            </div>
+                            <div class="subject-title">THL</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat4.jpg" alt="THG">
+                            </div>
+                            <div class="subject-title">THG</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat3.jpg" alt="English">
+                            </div>
+                            <div class="subject-title">English</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766750_120.jpg" alt="BDD">
+                            </div>
+                            <div class="subject-title">BDD</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat6.jpg" alt="SI">
+                            </div>
+                            <div class="subject-title">SI</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleActions(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat5.jpg" alt="NET">
+                            </div>
+                            <div class="subject-title">NET</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showFiles(this, 'CC')">CC</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Exam')">Exam</button>
+                            <button class="action-btn" onclick="showFiles(this, 'Course')">Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Teams Content -->
+            <div id="teams" class="content-screen">
+                <button class="back-btn" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+                <h2>Cozy Study Teams</h2>
+                <div class="teams-grid">
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766742_120.jpg" alt="Algebra Team">
+                            </div>
+                            <div class="subject-title">Algebra Team</div>
+                        </div>
+                        <a href="#" class="team-link">Join Algebra Study Group</a>
+                        <a href="#" class="team-link">Problem Solving Sessions</a>
+                        <a href="#" class="team-link">Peer Tutoring</a>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat4.jpg" alt="Statistics Team">
+                            </div>
+                            <div class="subject-title">Statistics Team</div>
+                        </div>
+                        <a href="#" class="team-link">Statistics Study Circle</a>
+                        <a href="#" class="team-link">Data Analysis Workshop</a>
+                        <a href="#" class="team-link">Project Collaboration</a>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catcat.jpg" alt="Entrepreneurship Team">
+                            </div>
+                            <div class="subject-title">Entrepreneurship Team</div>
+                        </div>
+                        <a href="#" class="team-link">Business Plan Group</a>
+                        <a href="#" class="team-link">Startup Ideas Discussion</a>
+                        <a href="#" class="team-link">Pitch Practice Sessions</a>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catcat.jpg" alt="Algorithms Team">
+                            </div>
+                            <div class="subject-title">Algorithms Team</div>
+                        </div>
+                        <a href="#" class="team-link">Coding Practice Group</a>
+                        <a href="#" class="team-link">Algorithm Study Sessions</a>
+                        <a href="#" class="team-link">Competitive Programming</a>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catt.jpg" alt="Programming Team">
+                            </div>
+                            <div class="subject-title">Programming Team</div>
+                        </div>
+                        <a href="#" class="team-link">OOP Study Group</a>
+                        <a href="#" class="team-link">Code Review Sessions</a>
+                        <a href="#" class="team-link">Project Collaboration</a>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766750_120.jpg" alt="Database Team">
+                            </div>
+                            <div class="subject-title">Database Team</div>
+                        </div>
+                        <a href="#" class="team-link">SQL Practice Group</a>
+                        <a href="#" class="team-link">Database Design Workshop</a>
+                        <a href="#" class="team-link">Query Optimization</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sources Content -->
+            <div id="sources" class="content-screen">
+                <button class="back-btn" onclick="showWelcome()">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+                <h2>Cozy Learning Resources</h2>
+                <div class="sources-grid">
+                    <div class="subject-card" onclick="toggleSources(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766742_120.jpg" alt="Algebra Resources">
+                            </div>
+                            <div class="subject-title">Algebra Resources</div>
+                        </div>
+                        <div class="source-buttons">
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Books')">Books</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Courses')">Courses</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Training')">Training</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Tutorials')">Tutorials</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleSources(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/cat4.jpg" alt="Statistics Resources">
+                            </div>
+                            <div class="subject-title">Statistics Resources</div>
+                        </div>
+                        <div class="source-buttons">
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Books')">Books</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Courses')">Courses</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Training')">Training</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Tutorials')">Tutorials</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleSources(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/catt.jpg" alt="Programming Resources">
+                            </div>
+                            <div class="subject-title">Programming Resources</div>
+                        </div>
+                        <div class="source-buttons">
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Books')">Books</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Courses')">Courses</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Training')">Training</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Tutorials')">Tutorials</button>
+                        </div>
+                    </div>
+                    <div class="subject-card" onclick="toggleSources(this)">
+                        <div class="subject-header">
+                            <div class="subject-icon">
+                                <img src="pictures/5841689567839766750_120.jpg" alt="Database Resources">
+                            </div>
+                            <div class="subject-title">Database Resources</div>
+                        </div>
+                        <div class="source-buttons">
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Books')">Books</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Courses')">Courses</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Training')">Training</button>
+                            <button class="source-btn" onclick="showSourceLinks(this, 'Tutorials')">Tutorials</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="paw-prints">
+        <img src="pictures/5841689567839766749_120.jpg" alt="Cat Paw" style="width: 30px; height: 30px; object-fit: contain;">
+    </div>
+    
+    <!-- Modal for displaying Google Drive files -->
+    <div id="fileModal" class="file-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">📄 File Viewer 🐾</h3>
+                <button class="close-modal" onclick="closeFileModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="fileIframe" src="" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" onclick="openInNewTab()">
+                    <i class="fas fa-external-link-alt"></i> Open in New Tab
+                </button>
+                <button class="modal-btn" onclick="closeFileModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainSections = document.getElementById('mainSections');
+            const backBtn = document.getElementById('backBtn');
+            const contentScreens = document.querySelectorAll('.content-screen');
+            
+            // Handle section card clicks
+            mainSections.addEventListener('click', function(e) {
+                const sectionCard = e.target.closest('.section-card');
+                if (!sectionCard) return;
+                
+                const section = sectionCard.dataset.section;
+                
+                // Hide main sections and show the selected content screen
+                mainSections.style.display = 'none';
+                backBtn.style.display = 'block';
+                
+                // Hide all content screens
+                contentScreens.forEach(screen => {
+                    screen.style.display = 'none';
+                });
+                
+                // Show the selected content screen
+                const selectedScreen = document.getElementById(section);
+                if (selectedScreen) {
+                    selectedScreen.style.display = 'block';
+                } else {
+                    // If no specific screen exists, show a notification
+                    const sectionTitle = sectionCard.querySelector('.section-title').textContent.trim();
+                    const notification = document.createElement('div');
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: white;
+                        padding: 15px 25px;
+                        border-radius: 30px;
+                        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    `;
+                    notification.innerHTML = `
+                        <img src="pictures/cat6.jpg" alt="Cat Icon" style="width: 30px; height: 30px; object-fit: contain;">
+                        <span>You clicked on ${sectionTitle}! This section is coming soon!</span>
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        notification.style.transition = 'opacity 0.5s ease';
+                        setTimeout(() => notification.remove(), 500);
+                    }, 3000);
+                    
+                    // Show main sections again after notification
+                    setTimeout(() => {
+                        mainSections.style.display = 'grid';
+                        backBtn.style.display = 'none';
+                    }, 3500);
+                }
+            });
+            
+            // Back button functionality
+            backBtn.addEventListener('click', function() {
+                mainSections.style.display = 'grid';
+                backBtn.style.display = 'none';
+                
+                // Hide all content screens
+                contentScreens.forEach(screen => {
+                    screen.style.display = 'none';
+                });
+            });
+            
+            // Create floating particles
+            createFloatingParticles();
+        });
+        
+        // Function to show welcome screen
+        function showWelcome() {
+            const mainSections = document.getElementById('mainSections');
+            const backBtn = document.getElementById('backBtn');
+            const contentScreens = document.querySelectorAll('.content-screen');
+            
+            mainSections.style.display = 'grid';
+            backBtn.style.display = 'none';
+            
+            // Hide all content screens
+            contentScreens.forEach(screen => {
+                screen.style.display = 'none';
+            });
+        }
+        
+        // Function to toggle action buttons
+        function toggleActions(element) {
+            const actionButtons = element.querySelector('.action-buttons');
+            if (actionButtons) {
+                actionButtons.style.display = actionButtons.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+        
+        // Function to toggle source buttons
+        function toggleSources(element) {
+            const sourceButtons = element.querySelector('.source-buttons');
+            if (sourceButtons) {
+                sourceButtons.style.display = sourceButtons.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+        
+        // Function to show files in modal
+        function showFiles(button, type) {
+            event.stopPropagation(); // Prevent event bubbling
+            
+            const subjectCard = button.closest('.subject-card');
+            const subjectTitle = subjectCard.querySelector('.subject-title').textContent;
+            
+            // Set modal title
+            document.getElementById('modalTitle').textContent = `${subjectTitle} - ${type} Files 🐾`;
+            
+            // In a real implementation, you would set the iframe source to the actual file URL
+            // For demo purposes, we'll use a placeholder
+            document.getElementById('fileIframe').src = 'https://drive.google.com/embeddedfolderview?id=YOUR_FOLDER_ID#list';
+            
+            // Show modal
+            document.getElementById('fileModal').style.display = 'flex';
+        }
+        
+        // Function to show source links
+        function showSourceLinks(button, type) {
+            event.stopPropagation(); // Prevent event bubbling
+            
+            const subjectCard = button.closest('.subject-card');
+            const subjectTitle = subjectCard.querySelector('.subject-title').textContent;
+            
+            // Set modal title
+            document.getElementById('modalTitle').textContent = `${subjectTitle} - ${type} Resources 🐾`;
+            
+            // In a real implementation, you would set the iframe source to the actual resource URL
+            // For demo purposes, we'll use a placeholder
+            document.getElementById('fileIframe').src = 'https://drive.google.com/embeddedfolderview?id=YOUR_FOLDER_ID#list';
+            
+            // Show modal
+            document.getElementById('fileModal').style.display = 'flex';
+        }
+        
+        // Function to close file modal
+        function closeFileModal() {
+            document.getElementById('fileModal').style.display = 'none';
+            document.getElementById('fileIframe').src = '';
+        }
+        
+        // Function to open file in new tab
+        function openInNewTab() {
+            const iframeSrc = document.getElementById('fileIframe').src;
+            if (iframeSrc && iframeSrc !== '') {
+                window.open(iframeSrc, '_blank');
+            }
+        }
+        
+        // Function to create floating particles
+        function createFloatingParticles() {
+            const particlesContainer = document.querySelector('.floating-particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size
+                const size = Math.random() * 20 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+    </script>
+</body>
+</html>
